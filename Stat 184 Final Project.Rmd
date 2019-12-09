@@ -1,0 +1,136 @@
+---
+title: "Final Project"
+output: html_notebook
+author: "Sandra Thomas"
+date: December 17, 2019
+---
+
+
+```{r}
+file.choose()
+```
+```{r}
+```
+
+
+```{r}
+data<-"/Users/sandrathomas/Downloads/Occupational_Employment_and_Wage_Estimates (1).csv"
+employment<-read.csv(data)
+```
+#load packages
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(DataComputing)
+library(mosaic)
+```
+
+
+```{r}
+View(employment)
+head(employment)
+```
+
+Research Question: Does area affect wage growth?
+Compare area to wages for all business/financial services jobs?
+Compare area to wages for all healthcare/health services jobs?
+Compare whether area affects 25th percentile salary?
+Compare whether area affects the 75th percentile? 
+Compare whether area affects median wage?
+
+```{r}
+
+```
+
+
+```{r}
+employment<-
+rename(ID = ID, 
+         year = Year,
+         areacode = Area.code,
+         areaname = Area.name, 
+         soccode= SOC.code,
+         occupation = Occupational.title,
+         employment = Ecmployment, 
+         averagewage= Average.wage
+         X25thpercentile= X25th.Percentile
+         X50thpercentile= X50th.Percentile
+         X75thpercentile= X75th.Percentile
+         annualwage= Annual.wage)
+```
+
+
+```{r}
+#Change Variable Names 
+employment<-mutate(name=gsub(pattern= "Average..wage", replacement ="Averagewage", name))%>%
+employment<-mutate(name=gsub(pattern= "X25th.Percentile", replacement ="25thPercentile", name))%>%
+employment<-mutate(name=gsub(pattern= "X50th.Percentile", replacement ="50thPercentile", name))%>%
+employment<-mutate(name=gsub(pattern= "X75th.Percentile", replacement ="75thPercentile", name))%>%
+employment<-mutate(name=gsub(pattern= "Annual.wage", replacement ="Annualwage", name))%>%
+employment<-mutate(name=gsub(pattern= "Area.code", replacement ="Areacode", name))%>%
+employment<-mutate(name=gsub(pattern= "Area.name", replacement ="Areaname", name))%>%
+employment<-mutate(name=gsub(pattern= "SOC.code", replacement ="SOCcode", name))%>%
+employment<-mutate(name=gsub(pattern= "Occupational.title", replacement ="Occupationtitle", name))%>%
+```
+
+
+```{r}
+#Mean Average Wage 
+employment<-
+  mean(Average.wage)
+```
+
+```{r}
+#Mean 25th Percentile
+employment<-
+  mean25thmean(25thPercentile)
+```
+
+```{r}
+#Mean 50th Percentile
+employment<-
+  mean50th=mean(50thPercentile)
+```
+
+```{r}
+#Mean 75th Percentile
+employment<-
+  mean75th=mean(75thPercentile)
+```
+
+```{r}
+#Find the minimum Average wage 
+employment<-
+ minaveragewage=min(Averagewage)
+```
+
+```{r}
+#Find the maximum average wage
+#Mean 50th Percentile
+employment<-
+  maxaveragewage=max(Averagewage)
+```
+
+```{r}
+#Find the range of Average wages 
+employment<-
+  range=minaveragewage-maxaveragewage
+```
+
+```{r}
+#Create a histogram of average wage by area
+```
+
+```{r}
+#create a histogram of annual wage by area
+```
+
+
+```{r}
+#create a kine graph comparing 25th percentile wages, 50th percentile wages, and 75th percentile wages
+```
+
+```{r}
+#find the ranges of average wages by area 
+```
+

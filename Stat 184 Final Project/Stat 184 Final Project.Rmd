@@ -1,0 +1,134 @@
+---
+title: "Final Project"
+output: html_notebook
+author: "Sandra Thomas"
+date: December 17, 2019
+---
+
+#load packages
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(DataComputing)
+library(mosaic)
+```
+
+```{r}
+data<-"Occupational_Employment_and_Wage_Estimates (1) 2.csv"
+employment<-read.csv(data)
+```
+
+```{r}
+View(employment)
+head(employment)
+```
+
+Research Question: Does area affect wage growth?
+Compare area to wages for all business/financial services jobs?
+Compare area to wages for all healthcare/health services jobs?
+Compare whether area affects 25th percentile salary?
+Compare whether area affects the 75th percentile? 
+Compare whether area affects median wage?
+
+```{r}
+employment%>%
+  group_by(Average.wage)
+```
+
+
+```{r}
+employment %>%
+rename(ID = ID, 
+         year = Year,
+         areacode = Area.code,
+         areaname = Area.name, 
+         soccode= SOC.code,
+         occupation = Occupational.title,
+         employment = Employment, 
+         averagewage= Average.wage,
+         X25thpercentile= X25th.Percentile,
+         X50thpercentile= X50th.Percentile,
+         X75thpercentile= X75th.Percentile,
+         annualwage= Annual.wage)
+```
+
+
+```{r}
+employment %>%
+  mutate(ID=as.numeric(ID))%>%
+  mutate(year=as.numeric(year))%>%
+  mutate(areacode=as.numeric(areacode))%>%
+  mutate(socccode=as.numeric(socccode))%>%
+  mutate(employment=as.numeric(employment))%>%
+  mutate(averagewage=as.numeric(averagewage))%>%
+  mutate(X25thpercentile=as.numeric(X25thpercentile))%>%
+  mutate(X50thpercentile=as.numeric(X50thpercentile))%>%
+  mutate(X75thpercentile=as.numeric(X75thpercentile))%>%
+  mutate(annualwage=as.numeric(annualwage))
+```
+```{r}
+employment%>%
+  arrange(desc(annualwage))
+```
+
+
+```{r}
+#Mean Average Wage 
+employment%>%
+  mean(averagewage)
+```
+
+```{r}
+#Mean 25th Percentile
+employment%>%
+  mean25th <-mean(X25thPercentile)
+```
+
+```{r}
+#Mean 50th Percentile
+employment<-
+  mean50th=mean(50thPercentile)
+```
+
+```{r}
+#Mean 75th Percentile
+employment<-
+  mean75th=mean(75thPercentile)
+```
+
+```{r}
+#Find the minimum Average wage 
+employment<-
+ minaveragewage=min(Averagewage)
+```
+
+```{r}
+#Find the maximum average wage
+#Mean 50th Percentile
+employment<-
+  maxaveragewage=max(Averagewage)
+```
+
+```{r}
+#Find the range of Average wages 
+employment<-
+  range=minaveragewage-maxaveragewage
+```
+
+```{r}
+#Create a histogram of average wage by area
+```
+
+```{r}
+#create a histogram of annual wage by area
+```
+
+
+```{r}
+#create a kine graph comparing 25th percentile wages, 50th percentile wages, and 75th percentile wages
+```
+
+```{r}
+#find the ranges of average wages by area 
+```
+

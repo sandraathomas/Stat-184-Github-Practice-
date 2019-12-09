@@ -1,0 +1,131 @@
+---
+title: "Stat 184 Final Project"
+output: html_notebook
+author: "Sandra Thomas"
+date: "Decemember 7th, 2019"
+---
+
+
+#load packages
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(DataComputing)
+library(mosaic)
+```
+
+```{r}
+data<-"Occupational_Employment_and_Wage_Estimates (1) 2.csv"
+employment<-read.csv(data)
+```
+
+```{r}
+View(employment)
+head(employment)
+```
+
+
+```{r}
+employment <-
+  employment%>%
+rename (ID = ID, 
+         year = Year,
+         areacode = Area.code,
+         areaname = Area.name, 
+         soccode= SOC.code,
+         occupation = Occupational.title,
+         employment = Employment, 
+         averagewage= Average.wage,
+         X25thpercentile= X25th.Percentile,
+         X50thpercentile= X50th.Percentile,
+         X75thpercentile= X75th.Percentile,
+         annualwage= Annual.wage)
+View(employment)
+```
+
+
+```{r}
+employment<-
+employment %>%
+  mutate(ID=as.numeric(ID))%>%
+  mutate(year=as.numeric(year))%>%
+  mutate(areacode=as.numeric(areacode))%>%
+  mutate(soccode=as.numeric(soccode))%>%
+  mutate(employment=as.numeric(employment))%>%
+  mutate(averagewage=as.numeric(averagewage))%>%
+  mutate(X25thpercentile=as.numeric(X25thpercentile))%>%
+  mutate(X50thpercentile=as.numeric(X50thpercentile))%>%
+  mutate(X75thpercentile=as.numeric(X75thpercentile))%>%
+  mutate(annualwage=as.numeric(annualwage))
+```
+
+
+#Arrange by Annual Wage 
+```{r}
+employment%>%
+  arrange(desc(annualwage))
+```
+
+```{r}
+#Mean Average Wage 
+mean(employment$averagewage, na.rm=TRUE)
+
+```
+
+```{r}
+ggplot(data=employment,aes(x=annualwage,y=X50thpercentile))+
+  geom_point()+
+  aes(colour=areacode)+
+  facet_wrap(~areaname,ncol=4) 
+```
+
+```{r}
+ggplot( data = employment, aes(x = averagewage)) + geom_histogram(binwidth = 5.6) + labs(title = "") + theme(legend.position = "right") 
+```
+
+
+```{r}
+employment %>% 
+  filter(grepl("Manager", occupation, ignore.case = TRUE)) 
+
+```
+
+```{r}
+employment%>%
+for (annualwage in employment){
+ while (annualwage>= 100000){
+  print("Upperclass")}
+  else(print("Lower to Middle Class"))}}}
+```
+
+
+```{r}
+employment%>%
+  na.omit() %>%
+  nrow()
+
+CompleteCases <-
+  employment%>%
+  select(annualwage, areaname, areacode, averagewage,occupation,employment,
+         averagewage,X25thpercentile,X50thpercentile,X75thpercentile,)%>%
+  na.omit()
+CompleteCases %>% nrow()
+
+mod1<-party::ctree(annualwage ~ areaname+ areacode, data=CompleteCases)
+plot(mod1, type="simple")
+
+CompleteCases%>%
+  mutate(probability= as.numeric(predict(mod1)), 
+         likelihood =
+           ifelse(annualwage, probability, 1-probability)) %>%
+  summarise(log_likelihood = sum (log(likelihood)))
+```
+
+
+
+
+
+
+
+
+
